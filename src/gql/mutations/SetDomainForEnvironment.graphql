@@ -1,0 +1,13 @@
+mutation SetDomainForEnvironment(
+  $projectId: String!
+  $environmentId: String!
+  $domain: String!
+  $serviceId: String!
+) {
+  setDomainForEnvironment(
+    projectId: $projectId
+    environmentId: $environmentId
+    domain: $domain
+    serviceId: $serviceId
+  )
+}

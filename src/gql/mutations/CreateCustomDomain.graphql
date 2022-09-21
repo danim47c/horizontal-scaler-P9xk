@@ -1,0 +1,15 @@
+mutation CreateCustomDomain(
+  $projectId: String!
+  $environmentId: String!
+  $domain: String!
+  $serviceId: String!
+) {
+  createCustomDomain(
+    projectId: $projectId
+    environmentId: $environmentId
+    domain: $domain
+    serviceId: $serviceId
+  ) {
+    id
+  }
+}

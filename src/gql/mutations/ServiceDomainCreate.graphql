@@ -1,0 +1,13 @@
+mutation ServiceDomainCreate(
+  $projectId: ID!
+  $environmentId: ID!
+  $serviceId: ID!
+) {
+  serviceDomainCreate(
+    projectId: $projectId
+    environmentId: $environmentId
+    serviceId: $serviceId
+  ) {
+    domain
+  }
+}

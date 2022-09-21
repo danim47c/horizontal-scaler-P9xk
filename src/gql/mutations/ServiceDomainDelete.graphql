@@ -1,0 +1,11 @@
+mutation ServiceDomainDelete(
+  $serviceDomainDeleteId: ID!
+  $projectId: ID!
+  $environmentId: ID!
+) {
+  serviceDomainDelete(
+    id: $serviceDomainDeleteId
+    projectId: $projectId
+    environmentId: $environmentId
+  )
+}

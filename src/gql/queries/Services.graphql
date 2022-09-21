@@ -1,0 +1,8 @@
+query Services($where: ServiceListWhereInput) {
+  services(where: $where) {
+    nodes {
+      id
+      name
+    }
+  }
+}

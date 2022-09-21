@@ -1,0 +1,11 @@
+mutation DeleteCustomDomain(
+  $projectId: String!
+  $environmentId: String!
+  $customDomainId: String!
+) {
+  deleteCustomDomain(
+    projectId: $projectId
+    environmentId: $environmentId
+    customDomainId: $customDomainId
+  )
+}

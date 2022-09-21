@@ -1,0 +1,12 @@
+query ServiceDomains($projectId: String!, $environmentId: String!, $serviceId: String!) {
+  allCustomDomainsForEnvironment(projectId: $projectId, environmentId: $environmentId, serviceId: $serviceId) {
+    serviceDomains {
+      id
+      domain
+    }
+    customDomains {
+      id
+      domain
+    }
+  }
+}

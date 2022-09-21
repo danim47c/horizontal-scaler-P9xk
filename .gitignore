@@ -158,4 +158,5 @@ dist
 # and uncomment the following lines
 # .pnp.*
 
+build/
 # End of https://www.toptal.com/developers/gitignore/api/yarn,node
