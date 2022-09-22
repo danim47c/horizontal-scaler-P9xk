@@ -16,7 +16,7 @@ async function main() {
   }
   await initSetup();
   const services = await getServices(`${SERVICE_NAME} #`);
-  const serviceId = getServiceIdByName(SERVICE_NAME, services);
+  const serviceId = getServiceIdByName(`${SERVICE_NAME} #1`, services);
   while (true) {
     let cpu = 0;
     let memory = 0;
