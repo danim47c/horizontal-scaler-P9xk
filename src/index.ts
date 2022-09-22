@@ -1,5 +1,5 @@
 import { initSetup } from "./controllers/setup";
-import { SERVICE_NAME } from "./constants";
+import { SERVICE_MAX, SERVICE_MIN, SERVICE_NAME } from "./constants";
 import {
   deleteMirror,
   getServiceIdByName,
@@ -16,7 +16,20 @@ async function main() {
   }
   await initSetup();
   const services = await getServices(`${SERVICE_NAME} #`);
+  services.sort(function (x, y) {
+    if (x.name < y.name) {
+      return -1;
+    }
+    if (x.name > y.name) {
+      return 1;
+    }
+    return 0;
+  });
   const serviceId = getServiceIdByName(`${SERVICE_NAME} #1`, services);
+  for (let i = 1; i < SERVICE_MIN; i++) {
+    const service = await mirrorService(serviceId, services);
+    services.push(service);
+  }
   while (true) {
     let cpu = 0;
     let memory = 0;
@@ -26,18 +39,27 @@ async function main() {
       memory += metrics.memory;
     }
     if (services.length > 0) {
-      cpu = cpu / services.length;
+      cpu = (cpu / services.length) * 100;
       memory = memory / services.length;
     }
-    if (cpu > CPU_MAX || memory > MEMORY_MAX) {
+    console.log(cpu, memory);
+    if (
+      (cpu > CPU_MAX || memory > MEMORY_MAX) &&
+      services.length < SERVICE_MAX
+    ) {
       const service = await mirrorService(serviceId, services);
       services.push(service);
-      sleep(3);
-    } else if (cpu < CPU_MIN && memory < MEMORY_MIN && services.length > 1) {
+      await sleep(1);
+    } else if (
+      cpu < CPU_MIN &&
+      memory < MEMORY_MIN &&
+      services.length > SERVICE_MIN
+    ) {
       await deleteMirror(services);
-      sleep(3);
+      services.pop();
+      await sleep(1);
     }
-    sleep(1);
+    await sleep(1);
   }
 }
 

@@ -16,3 +16,5 @@ export const CPU_MIN = Number(getEnvVar("CPU_MIN"));
 export const CPU_MAX = Number(getEnvVar("CPU_MAX"));
 export const MEMORY_MIN = Number(getEnvVar("MEMORY_MIN"));
 export const MEMORY_MAX = Number(getEnvVar("MEMORY_MAX"));
+export const SERVICE_MIN = Number(getEnvVar("SERVICE_MIN"));
+export const SERVICE_MAX = Number(getEnvVar("SERVICE_MAX"));

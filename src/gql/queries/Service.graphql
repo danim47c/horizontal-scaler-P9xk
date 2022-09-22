@@ -10,5 +10,9 @@ query Service($serviceId: ID!) {
     restartPolicyType
     restartPolicyMaxRetries
     source
+    repoTriggers {
+      repository
+      branch
+    }
   }
 }

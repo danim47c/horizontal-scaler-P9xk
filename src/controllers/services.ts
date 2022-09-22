@@ -21,7 +21,7 @@ export const getAllServices = async (): Promise<
 };
 
 export const getServices = async (
-  serviceNameContains: string
+  serviceNameContains: string,
 ): Promise<ServicesQuery["services"]["nodes"]> => {
   const nodes = (
     await sdk.Services({
@@ -41,7 +41,7 @@ export const getServices = async (
 
 export const updateServiceName = async (
   serviceId: string,
-  name: string
+  name: string,
 ): Promise<void> => {
   await sdk.UpdateServiceName({
     projectId: PROJECT_ID,
@@ -52,7 +52,7 @@ export const updateServiceName = async (
 
 export const getServiceIdByName = (
   name: string,
-  services: ServicesQuery["services"]["nodes"]
+  services: ServicesQuery["services"]["nodes"],
 ): string => {
   for (let service of services) {
     if (service.name === name) {
@@ -64,7 +64,7 @@ export const getServiceIdByName = (
 
 export const mirrorService = async (
   sourceServiceId: string,
-  services: ServicesQuery["services"]["nodes"]
+  services: ServicesQuery["services"]["nodes"],
 ) => {
   // TODO: Merge all Queries & Mutations into one
   const serviceId = (
@@ -83,6 +83,13 @@ export const mirrorService = async (
     serviceId: serviceId,
     projectId: PROJECT_ID,
     ...sourceService,
+  });
+
+  await sdk.ConnectServiceToRepo({
+    projectId: PROJECT_ID,
+    serviceId: serviceId,
+    branch: sourceService.repoTriggers[0].branch,
+    source: sourceService.source,
   });
 
   const variables = (
@@ -117,7 +124,7 @@ export const mirrorService = async (
 };
 
 export const deleteMirror = async (
-  services: ServicesQuery["services"]["nodes"]
+  services: ServicesQuery["services"]["nodes"],
 ) => {
   const service = services[services.length - 1];
   await sdk.DeleteService({

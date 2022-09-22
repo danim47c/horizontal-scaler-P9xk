@@ -10,7 +10,6 @@ mutation UpdateService(
   $rootDirectory: String
   $restartPolicyType: RestartPolicyType
   $restartPolicyMaxRetries: Int
-  $source: Json
 ) {
   updateService(
     builder: $builder
@@ -24,7 +23,6 @@ mutation UpdateService(
     rootDirectory: $rootDirectory
     restartPolicyType: $restartPolicyType
     restartPolicyMaxRetries: $restartPolicyMaxRetries
-    source: $source
   ) {
     id
     name

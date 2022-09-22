@@ -9,7 +9,9 @@ export const getMetrics = async (
     memory: number;
   }
 > => {
-  const metrics = (
+  let cpu = 0;
+  let memory = 0;
+  const deployments = (
     await sdk.MetricsForService({
       projectId: PROJECT_ID,
       environmentId: ENVIRONMENT_ID,
@@ -17,10 +19,9 @@ export const getMetrics = async (
       // Last 1 minute
       startDate: new Date(Date.now() - 60000).toISOString(),
     })
-  ).metricsForService.deployments[0].metrics;
-  let cpu = 0;
-  let memory = 0;
-  if (metrics.length > 0) {
+  ).metricsForService.deployments;
+  if (deployments.length > 0 && deployments[0].metrics.length > 0) {
+    const metrics = deployments[0].metrics;
     cpu = metrics.at(-1)!.cpuPercentVCPU ?? 0;
     memory =
       (metrics.at(-1)!.memoryUsageBytes / metrics.at(-1)!.memoryLimitBytes) *

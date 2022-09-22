@@ -5174,6 +5174,20 @@ export enum WorkflowStatus {
   Running = "Running",
 }
 
+export type ConnectServiceToRepoMutationVariables = Exact<
+  {
+    projectId: Scalars["ID"];
+    source: Scalars["Json"];
+    branch: Scalars["String"];
+    serviceId: Scalars["ID"];
+  }
+>;
+
+export type ConnectServiceToRepoMutation = {
+  __typename?: "Mutation";
+  connectServiceToRepo: boolean;
+};
+
 export type CreateCustomDomainMutationVariables = Exact<
   {
     projectId: Scalars["String"];
@@ -5279,7 +5293,6 @@ export type UpdateServiceMutationVariables = Exact<
     rootDirectory?: InputMaybe<Scalars["String"]>;
     restartPolicyType?: InputMaybe<RestartPolicyType>;
     restartPolicyMaxRetries?: InputMaybe<Scalars["Int"]>;
-    source?: InputMaybe<Scalars["Json"]>;
   }
 >;
 
@@ -5378,6 +5391,9 @@ export type ServiceQuery = {
     restartPolicyType: RestartPolicyType;
     restartPolicyMaxRetries: number;
     source: any;
+    repoTriggers: Array<
+      { __typename?: "DeploymentTrigger"; repository: string; branch: string }
+    >;
   };
 };
 
@@ -5416,6 +5432,16 @@ export type ServicesQuery = {
   };
 };
 
+export const ConnectServiceToRepoDocument = gql`
+    mutation ConnectServiceToRepo($projectId: ID!, $source: Json!, $branch: String!, $serviceId: ID!) {
+  connectServiceToRepo(
+    projectId: $projectId
+    source: $source
+    branch: $branch
+    serviceId: $serviceId
+  )
+}
+    `;
 export const CreateCustomDomainDocument = gql`
     mutation CreateCustomDomain($projectId: String!, $environmentId: String!, $domain: String!, $serviceId: String!) {
   createCustomDomain(
@@ -5480,7 +5506,7 @@ export const SetDomainForEnvironmentDocument = gql`
 }
     `;
 export const UpdateServiceDocument = gql`
-    mutation UpdateService($builder: Builder, $icon: String, $serviceId: ID!, $projectId: ID!, $healthcheckPath: String, $startCommand: String, $buildCommand: String, $watchPatterns: [String!], $rootDirectory: String, $restartPolicyType: RestartPolicyType, $restartPolicyMaxRetries: Int, $source: Json) {
+    mutation UpdateService($builder: Builder, $icon: String, $serviceId: ID!, $projectId: ID!, $healthcheckPath: String, $startCommand: String, $buildCommand: String, $watchPatterns: [String!], $rootDirectory: String, $restartPolicyType: RestartPolicyType, $restartPolicyMaxRetries: Int) {
   updateService(
     builder: $builder
     icon: $icon
@@ -5493,7 +5519,6 @@ export const UpdateServiceDocument = gql`
     rootDirectory: $rootDirectory
     restartPolicyType: $restartPolicyType
     restartPolicyMaxRetries: $restartPolicyMaxRetries
-    source: $source
   ) {
     id
     name
@@ -5558,6 +5583,10 @@ export const ServiceDocument = gql`
     restartPolicyType
     restartPolicyMaxRetries
     source
+    repoTriggers {
+      repository
+      branch
+    }
   }
 }
     `;
@@ -5607,6 +5636,21 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper,
 ) {
   return {
+    ConnectServiceToRepo(
+      variables: ConnectServiceToRepoMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<ConnectServiceToRepoMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<ConnectServiceToRepoMutation>(
+            ConnectServiceToRepoDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "ConnectServiceToRepo",
+        "mutation",
+      );
+    },
     CreateCustomDomain(
       variables: CreateCustomDomainMutationVariables,
       requestHeaders?: Dom.RequestInit["headers"],
