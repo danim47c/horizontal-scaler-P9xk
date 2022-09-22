@@ -66,6 +66,7 @@ export const mirrorService = async (
   sourceServiceId: string,
   services: ServicesQuery["services"]["nodes"]
 ) => {
+  // TODO: Merge all Queries & Mutations into one
   const serviceId = (
     await sdk.CreateService({
       projectId: PROJECT_ID,

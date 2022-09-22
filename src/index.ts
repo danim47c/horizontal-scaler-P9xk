@@ -8,7 +8,7 @@ import {
 } from "./controllers/services";
 import { getMetrics } from "./controllers/metrics";
 import { MEMORY_MIN, MEMORY_MAX, CPU_MIN, CPU_MAX } from "./constants";
-import { sleep } from "../util/util";
+import { sleep } from "./util/util";
 
 async function main() {
   if (SERVICE_NAME.length > 27) {

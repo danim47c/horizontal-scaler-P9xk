@@ -1,7 +1,6 @@
 import { sdk } from "../gql/clients";
 import { PROJECT_ID, ENVIRONMENT_ID } from "../constants";
 
-// TODO: Implement a cache layer
 export const getMetrics = async (
   serviceId: string,
 ): Promise<
