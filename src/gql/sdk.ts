@@ -5241,6 +5241,19 @@ export type SetDomainForEnvironmentMutation = {
   setDomainForEnvironment: boolean;
 };
 
+export type UpdateServiceMutationVariables = Exact<
+  {
+    projectId: Scalars["ID"];
+    serviceId: Scalars["ID"];
+    name?: InputMaybe<Scalars["String"]>;
+  }
+>;
+
+export type UpdateServiceMutation = {
+  __typename?: "Mutation";
+  updateService: { __typename?: "Service"; id: string };
+};
+
 export type ServiceDomainsQueryVariables = Exact<
   {
     projectId: Scalars["String"];
@@ -5325,6 +5338,13 @@ export const SetDomainForEnvironmentDocument = gql`
     domain: $domain
     serviceId: $serviceId
   )
+}
+    `;
+export const UpdateServiceDocument = gql`
+    mutation UpdateService($projectId: ID!, $serviceId: ID!, $name: String) {
+  updateService(projectId: $projectId, serviceId: $serviceId, name: $name) {
+    id
+  }
 }
     `;
 export const ServiceDomainsDocument = gql`
@@ -5445,6 +5465,21 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders },
           ),
         "SetDomainForEnvironment",
+        "mutation",
+      );
+    },
+    UpdateService(
+      variables: UpdateServiceMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<UpdateServiceMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<UpdateServiceMutation>(
+            UpdateServiceDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "UpdateService",
         "mutation",
       );
     },

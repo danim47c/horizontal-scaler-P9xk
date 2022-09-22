@@ -21,6 +21,7 @@
   "scripts": {
     "build": "tsc -p .",
     "codegen": "graphql-codegen --config codegen.yml",
-    "fmt": "rome format ."
+    "fmt": "rome format .",
+    "start": "node build/"
   }
 }
