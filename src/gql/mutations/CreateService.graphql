@@ -1,0 +1,5 @@
+mutation CreateService($projectId: ID!, $name: String, $source: Json!) {
+  createService(projectId: $projectId, name: $name, source: $source) {
+    id
+  }
+}

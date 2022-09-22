@@ -1,0 +1,14 @@
+query Service($serviceId: ID!) {
+  service(id: $serviceId) {
+    icon
+    builder
+    healthcheckPath
+    startCommand
+    buildCommand
+    watchPatterns
+    rootDirectory
+    restartPolicyType
+    restartPolicyMaxRetries
+    source
+  }
+}

@@ -3,11 +3,13 @@ import { PROJECT_ID, ENVIRONMENT_ID } from "../constants";
 
 // TODO: Implement a cache layer
 export const getMetrics = async (
-  serviceId: string
-): Promise<{
-  cpu: number;
-  memory: number;
-}> => {
+  serviceId: string,
+): Promise<
+  {
+    cpu: number;
+    memory: number;
+  }
+> => {
   const metrics = (
     await sdk.MetricsForService({
       projectId: PROJECT_ID,

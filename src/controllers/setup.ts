@@ -17,7 +17,7 @@ import { getServiceIdByName } from "./services";
 import { initTraefik } from "./traefik";
 
 export const initSetup = async () => {
-  const services = await getAllServices(PROJECT_ID);
+  const services = await getAllServices();
   if (!isSetupComplete(services)) {
     const serviceId = getServiceIdByName(SERVICE_NAME, services);
     const domains = await getServiceDomains(serviceId);

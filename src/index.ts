@@ -1,6 +1,10 @@
 import { initSetup } from "./controllers/setup";
 import { SERVICE_NAME } from "./constants";
-import { getServices } from "./controllers/services";
+import {
+  getServiceIdByName,
+  getServices,
+  mirrorService,
+} from "./controllers/services";
 import { getMetrics } from "./controllers/metrics";
 import { MEMORY_MIN, MEMORY_MAX, CPU_MIN, CPU_MAX } from "./constants";
 
@@ -10,6 +14,7 @@ async function main() {
   }
   await initSetup();
   const services = await getServices(`${SERVICE_NAME} #`);
+  const serviceId = getServiceIdByName(SERVICE_NAME, services);
   while (true) {
     let cpu = 0;
     let memory = 0;
@@ -23,11 +28,12 @@ async function main() {
       memory = memory / services.length;
     }
     if (cpu > CPU_MAX || memory > MEMORY_MAX) {
-      // scale up
+      const service = await mirrorService(serviceId, services);
+      services.push(service);
     } else if (cpu < CPU_MIN && memory < MEMORY_MIN && services.length > 1) {
       // scale down
     }
-    await new Promise((f) => setTimeout(f, 1000));
+    await new Promise((f) => setTimeout(f, 60000));
   }
 }
 

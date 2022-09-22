@@ -33,7 +33,7 @@ export const initTraefik = async () => {
       url: `https://${DOMAIN_ID}-${SERVICE_NAME}${count}.up.railway.app`,
     });
   });
-  
+
   TRAEFIK_CONF.http.services.s1.loadBalancer.servers = servers;
   writeFile("/etc/traefik/traefik-conf.yml", stringify(TRAEFIK_CONF));
 };

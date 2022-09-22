@@ -1,5 +1,32 @@
-mutation UpdateService($projectId: ID!, $serviceId: ID!, $name: String) {
-  updateService(projectId: $projectId, serviceId: $serviceId, name: $name) {
+mutation UpdateService(
+  $builder: Builder
+  $icon: String
+  $serviceId: ID!
+  $projectId: ID!
+  $healthcheckPath: String
+  $startCommand: String
+  $buildCommand: String
+  $watchPatterns: [String!]
+  $rootDirectory: String
+  $restartPolicyType: RestartPolicyType
+  $restartPolicyMaxRetries: Int
+  $source: Json
+) {
+  updateService(
+    builder: $builder
+    icon: $icon
+    serviceId: $serviceId
+    projectId: $projectId
+    healthcheckPath: $healthcheckPath
+    startCommand: $startCommand
+    buildCommand: $buildCommand
+    watchPatterns: $watchPatterns
+    rootDirectory: $rootDirectory
+    restartPolicyType: $restartPolicyType
+    restartPolicyMaxRetries: $restartPolicyMaxRetries
+    source: $source
+  ) {
     id
+    name
   }
 }

@@ -5188,6 +5188,19 @@ export type CreateCustomDomainMutation = {
   createCustomDomain: { __typename?: "CustomDomain"; id: string };
 };
 
+export type CreateServiceMutationVariables = Exact<
+  {
+    projectId: Scalars["ID"];
+    name?: InputMaybe<Scalars["String"]>;
+    source: Scalars["Json"];
+  }
+>;
+
+export type CreateServiceMutation = {
+  __typename?: "Mutation";
+  createService: { __typename?: "Service"; id: string };
+};
+
 export type DeleteCustomDomainMutationVariables = Exact<
   {
     projectId: Scalars["String"];
@@ -5243,13 +5256,35 @@ export type SetDomainForEnvironmentMutation = {
 
 export type UpdateServiceMutationVariables = Exact<
   {
+    builder?: InputMaybe<Builder>;
+    icon?: InputMaybe<Scalars["String"]>;
+    serviceId: Scalars["ID"];
+    projectId: Scalars["ID"];
+    healthcheckPath?: InputMaybe<Scalars["String"]>;
+    startCommand?: InputMaybe<Scalars["String"]>;
+    buildCommand?: InputMaybe<Scalars["String"]>;
+    watchPatterns?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
+    rootDirectory?: InputMaybe<Scalars["String"]>;
+    restartPolicyType?: InputMaybe<RestartPolicyType>;
+    restartPolicyMaxRetries?: InputMaybe<Scalars["Int"]>;
+    source?: InputMaybe<Scalars["Json"]>;
+  }
+>;
+
+export type UpdateServiceMutation = {
+  __typename?: "Mutation";
+  updateService: { __typename?: "Service"; id: string; name: string };
+};
+
+export type UpdateServiceNameMutationVariables = Exact<
+  {
     projectId: Scalars["ID"];
     serviceId: Scalars["ID"];
     name?: InputMaybe<Scalars["String"]>;
   }
 >;
 
-export type UpdateServiceMutation = {
+export type UpdateServiceNameMutation = {
   __typename?: "Mutation";
   updateService: { __typename?: "Service"; id: string };
 };
@@ -5281,6 +5316,29 @@ export type MetricsForServiceQuery = {
         >;
       }
     >;
+  };
+};
+
+export type ServiceQueryVariables = Exact<
+  {
+    serviceId: Scalars["ID"];
+  }
+>;
+
+export type ServiceQuery = {
+  __typename?: "Query";
+  service: {
+    __typename?: "Service";
+    icon?: string | null;
+    builder: Builder;
+    healthcheckPath?: string | null;
+    startCommand?: string | null;
+    buildCommand?: string | null;
+    watchPatterns: Array<string>;
+    rootDirectory?: string | null;
+    restartPolicyType: RestartPolicyType;
+    restartPolicyMaxRetries: number;
+    source: any;
   };
 };
 
@@ -5331,6 +5389,13 @@ export const CreateCustomDomainDocument = gql`
   }
 }
     `;
+export const CreateServiceDocument = gql`
+    mutation CreateService($projectId: ID!, $name: String, $source: Json!) {
+  createService(projectId: $projectId, name: $name, source: $source) {
+    id
+  }
+}
+    `;
 export const DeleteCustomDomainDocument = gql`
     mutation DeleteCustomDomain($projectId: String!, $environmentId: String!, $customDomainId: String!) {
   deleteCustomDomain(
@@ -5371,7 +5436,28 @@ export const SetDomainForEnvironmentDocument = gql`
 }
     `;
 export const UpdateServiceDocument = gql`
-    mutation UpdateService($projectId: ID!, $serviceId: ID!, $name: String) {
+    mutation UpdateService($builder: Builder, $icon: String, $serviceId: ID!, $projectId: ID!, $healthcheckPath: String, $startCommand: String, $buildCommand: String, $watchPatterns: [String!], $rootDirectory: String, $restartPolicyType: RestartPolicyType, $restartPolicyMaxRetries: Int, $source: Json) {
+  updateService(
+    builder: $builder
+    icon: $icon
+    serviceId: $serviceId
+    projectId: $projectId
+    healthcheckPath: $healthcheckPath
+    startCommand: $startCommand
+    buildCommand: $buildCommand
+    watchPatterns: $watchPatterns
+    rootDirectory: $rootDirectory
+    restartPolicyType: $restartPolicyType
+    restartPolicyMaxRetries: $restartPolicyMaxRetries
+    source: $source
+  ) {
+    id
+    name
+  }
+}
+    `;
+export const UpdateServiceNameDocument = gql`
+    mutation UpdateServiceName($projectId: ID!, $serviceId: ID!, $name: String) {
   updateService(projectId: $projectId, serviceId: $serviceId, name: $name) {
     id
   }
@@ -5393,6 +5479,22 @@ export const MetricsForServiceDocument = gql`
         date
       }
     }
+  }
+}
+    `;
+export const ServiceDocument = gql`
+    query Service($serviceId: ID!) {
+  service(id: $serviceId) {
+    icon
+    builder
+    healthcheckPath
+    startCommand
+    buildCommand
+    watchPatterns
+    rootDirectory
+    restartPolicyType
+    restartPolicyMaxRetries
+    source
   }
 }
     `;
@@ -5454,6 +5556,21 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders },
           ),
         "CreateCustomDomain",
+        "mutation",
+      );
+    },
+    CreateService(
+      variables: CreateServiceMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<CreateServiceMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateServiceMutation>(
+            CreateServiceDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "CreateService",
         "mutation",
       );
     },
@@ -5532,6 +5649,21 @@ export function getSdk(
         "mutation",
       );
     },
+    UpdateServiceName(
+      variables: UpdateServiceNameMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<UpdateServiceNameMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<UpdateServiceNameMutation>(
+            UpdateServiceNameDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "UpdateServiceName",
+        "mutation",
+      );
+    },
     MetricsForService(
       variables: MetricsForServiceQueryVariables,
       requestHeaders?: Dom.RequestInit["headers"],
@@ -5544,6 +5676,20 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders },
           ),
         "MetricsForService",
+        "query",
+      );
+    },
+    Service(
+      variables: ServiceQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<ServiceQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<ServiceQuery>(ServiceDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "Service",
         "query",
       );
     },
