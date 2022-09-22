@@ -1,0 +1,11 @@
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  file:
+    filename: /etc/traefik/traefik-conf.yml
+    watch: true
+
+accessLog:
+  filePath: "/dev/stdout"

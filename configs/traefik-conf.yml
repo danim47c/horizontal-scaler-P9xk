@@ -1,0 +1,10 @@
+http:
+  routers:
+    r1:
+      rule: "!Host(`google.com`)"
+      service: s1
+  services:
+    s1:
+      loadBalancer:
+        passHostHeader: false
+        servers:

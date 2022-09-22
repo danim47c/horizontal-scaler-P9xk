@@ -14,6 +14,7 @@ import {
   createCustomDomain,
 } from "./domains";
 import { getServiceIdByName } from "./services";
+import { initTraefik } from "./traefik";
 
 export const initSetup = async () => {
   const services = await getServices(PROJECT_ID);
@@ -35,7 +36,7 @@ export const initSetup = async () => {
       serviceId: serviceId,
       domain: `${DOMAIN_ID}-${SERVICE_NAME}1.up.railway.app`,
     });
-    if (!process.env.RAILWAY_STATIC_URL) {
+    if (!process.env.RAILWAY_STATIC_URL && customDomains.length === 0) {
       await sdk.ServiceDomainCreate({
         projectId: PROJECT_ID,
         environmentId: ENVIRONMENT_ID,
@@ -52,6 +53,8 @@ export const initSetup = async () => {
     await updateServiceName(SERVICE_ID, `${SERVICE_NAME}-gtwy`);
     await updateServiceName(serviceId, `${SERVICE_NAME} #1`);
   }
+  // Setup traefik
+  await initTraefik();
 };
 
 const isSetupComplete = (
