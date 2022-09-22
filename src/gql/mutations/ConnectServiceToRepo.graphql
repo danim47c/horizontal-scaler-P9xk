@@ -1,0 +1,13 @@
+mutation ConnectServiceToRepo(
+  $projectId: ID!
+  $source: Json!
+  $branch: String!
+  $serviceId: ID!
+) {
+  connectServiceToRepo(
+    projectId: $projectId
+    source: $source
+    branch: $branch
+    serviceId: $serviceId
+  )
+}
