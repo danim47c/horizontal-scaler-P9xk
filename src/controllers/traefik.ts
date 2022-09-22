@@ -1,7 +1,7 @@
 import { stringify } from "yaml";
 import { writeFile } from "fs/promises";
 import { getServices } from "./services";
-import { DOMAIN_ID, PROJECT_ID, SERVICE_NAME } from "../constants";
+import { DOMAIN_ID, SERVICE_NAME } from "../constants";
 
 const TRAEFIK_CONF: TraefikConf = {
   http: {
@@ -25,16 +25,15 @@ const TRAEFIK_CONF: TraefikConf = {
 export const initTraefik = async () => {
   let servers: { url: string }[] = [];
   let count = 0;
-  const services = await getServices(PROJECT_ID);
+  const services = await getServices(`${SERVICE_NAME} #`);
 
-  services.forEach((service) => {
-    if (service.name.includes(`${SERVICE_NAME} #`)) {
-      count++;
-      servers.push({
-        url: `https://${DOMAIN_ID}-${SERVICE_NAME}${count}.up.railway.app`,
-      });
-    }
+  services.forEach(() => {
+    count++;
+    servers.push({
+      url: `https://${DOMAIN_ID}-${SERVICE_NAME}${count}.up.railway.app`,
+    });
   });
+  
   TRAEFIK_CONF.http.services.s1.loadBalancer.servers = servers;
   writeFile("/etc/traefik/traefik-conf.yml", stringify(TRAEFIK_CONF));
 };

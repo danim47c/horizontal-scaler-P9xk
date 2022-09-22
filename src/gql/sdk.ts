@@ -5254,6 +5254,36 @@ export type UpdateServiceMutation = {
   updateService: { __typename?: "Service"; id: string };
 };
 
+export type MetricsForServiceQueryVariables = Exact<
+  {
+    projectId: Scalars["ID"];
+    environmentId: Scalars["ID"];
+    startDate?: InputMaybe<Scalars["String"]>;
+    serviceId?: InputMaybe<Scalars["ID"]>;
+  }
+>;
+
+export type MetricsForServiceQuery = {
+  __typename?: "Query";
+  metricsForService: {
+    __typename?: "EnvironmentMetrics";
+    deployments: Array<
+      {
+        __typename?: "DeploymentWithMetrics";
+        metrics: Array<
+          {
+            __typename?: "Metric";
+            cpuPercentVCPU: number;
+            memoryUsageBytes: any;
+            memoryLimitBytes: any;
+            date: string;
+          }
+        >;
+      }
+    >;
+  };
+};
+
 export type ServiceDomainsQueryVariables = Exact<
   {
     projectId: Scalars["String"];
@@ -5344,6 +5374,25 @@ export const UpdateServiceDocument = gql`
     mutation UpdateService($projectId: ID!, $serviceId: ID!, $name: String) {
   updateService(projectId: $projectId, serviceId: $serviceId, name: $name) {
     id
+  }
+}
+    `;
+export const MetricsForServiceDocument = gql`
+    query MetricsForService($projectId: ID!, $environmentId: ID!, $startDate: String, $serviceId: ID) {
+  metricsForService(
+    projectId: $projectId
+    environmentId: $environmentId
+    startDate: $startDate
+    serviceId: $serviceId
+  ) {
+    deployments {
+      metrics {
+        cpuPercentVCPU
+        memoryUsageBytes
+        memoryLimitBytes
+        date
+      }
+    }
   }
 }
     `;
@@ -5481,6 +5530,21 @@ export function getSdk(
           ),
         "UpdateService",
         "mutation",
+      );
+    },
+    MetricsForService(
+      variables: MetricsForServiceQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<MetricsForServiceQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<MetricsForServiceQuery>(
+            MetricsForServiceDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "MetricsForService",
+        "query",
       );
     },
     ServiceDomains(

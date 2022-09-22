@@ -1,0 +1,22 @@
+query MetricsForService(
+  $projectId: ID!
+  $environmentId: ID!
+  $startDate: String
+  $serviceId: ID
+) {
+  metricsForService(
+    projectId: $projectId
+    environmentId: $environmentId
+    startDate: $startDate
+    serviceId: $serviceId
+  ) {
+    deployments {
+      metrics {
+        cpuPercentVCPU
+        memoryUsageBytes
+        memoryLimitBytes
+        date
+      }
+    }
+  }
+}

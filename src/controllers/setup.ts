@@ -5,7 +5,7 @@ import {
   SERVICE_ID,
   DOMAIN_ID,
 } from "../constants";
-import { getServices, updateServiceName } from "./services";
+import { getAllServices, updateServiceName } from "./services";
 import { ServicesQuery } from "../gql/sdk";
 import { sdk } from "../gql/clients";
 import {
@@ -17,7 +17,7 @@ import { getServiceIdByName } from "./services";
 import { initTraefik } from "./traefik";
 
 export const initSetup = async () => {
-  const services = await getServices(PROJECT_ID);
+  const services = await getAllServices(PROJECT_ID);
   if (!isSetupComplete(services)) {
     const serviceId = getServiceIdByName(SERVICE_NAME, services);
     const domains = await getServiceDomains(serviceId);
