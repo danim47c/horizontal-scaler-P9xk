@@ -38,6 +38,19 @@ export const initTraefik = async () => {
   writeFile("/etc/traefik/traefik-conf.yml", stringify(TRAEFIK_CONF));
 };
 
+export const add = async () => {
+  const count = TRAEFIK_CONF.http.services.s1.loadBalancer.servers.length + 1;
+  TRAEFIK_CONF.http.services.s1.loadBalancer.servers.push({
+    url: `https://${DOMAIN_ID}-${SERVICE_NAME}${count}.up.railway.app`,
+  });
+  writeFile("/etc/traefik/traefik-conf.yml", stringify(TRAEFIK_CONF));
+};
+
+export const remove = async () => {
+  TRAEFIK_CONF.http.services.s1.loadBalancer.servers.pop();
+  writeFile("/etc/traefik/traefik-conf.yml", stringify(TRAEFIK_CONF));
+};
+
 interface TraefikConf {
   http: {
     routers: {

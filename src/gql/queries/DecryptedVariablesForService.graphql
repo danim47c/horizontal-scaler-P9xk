@@ -1,0 +1,11 @@
+query DecryptedVariablesForService(
+  $projectId: String!
+  $environmentId: String!
+  $serviceId: String
+) {
+  decryptedVariablesForService(
+    projectId: $projectId
+    environmentId: $environmentId
+    serviceId: $serviceId
+  )
+}

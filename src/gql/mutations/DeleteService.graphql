@@ -1,0 +1,3 @@
+mutation DeleteService($serviceId: ID!, $projectId: ID!) {
+  deleteService(serviceId: $serviceId, projectId: $projectId)
+}

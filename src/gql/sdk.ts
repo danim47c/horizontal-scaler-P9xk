@@ -5214,6 +5214,18 @@ export type DeleteCustomDomainMutation = {
   deleteCustomDomain: boolean;
 };
 
+export type DeleteServiceMutationVariables = Exact<
+  {
+    serviceId: Scalars["ID"];
+    projectId: Scalars["ID"];
+  }
+>;
+
+export type DeleteServiceMutation = {
+  __typename?: "Mutation";
+  deleteService: boolean;
+};
+
 export type ServiceDomainCreateMutationVariables = Exact<
   {
     projectId: Scalars["ID"];
@@ -5287,6 +5299,33 @@ export type UpdateServiceNameMutationVariables = Exact<
 export type UpdateServiceNameMutation = {
   __typename?: "Mutation";
   updateService: { __typename?: "Service"; id: string };
+};
+
+export type VariablesSetFromObjectMutationVariables = Exact<
+  {
+    projectId: Scalars["String"];
+    environmentId: Scalars["String"];
+    serviceId?: InputMaybe<Scalars["String"]>;
+    variables: Scalars["Json"];
+  }
+>;
+
+export type VariablesSetFromObjectMutation = {
+  __typename?: "Mutation";
+  variablesSetFromObject: boolean;
+};
+
+export type DecryptedVariablesForServiceQueryVariables = Exact<
+  {
+    projectId: Scalars["String"];
+    environmentId: Scalars["String"];
+    serviceId?: InputMaybe<Scalars["String"]>;
+  }
+>;
+
+export type DecryptedVariablesForServiceQuery = {
+  __typename?: "Query";
+  decryptedVariablesForService: any;
 };
 
 export type MetricsForServiceQueryVariables = Exact<
@@ -5405,6 +5444,11 @@ export const DeleteCustomDomainDocument = gql`
   )
 }
     `;
+export const DeleteServiceDocument = gql`
+    mutation DeleteService($serviceId: ID!, $projectId: ID!) {
+  deleteService(serviceId: $serviceId, projectId: $projectId)
+}
+    `;
 export const ServiceDomainCreateDocument = gql`
     mutation ServiceDomainCreate($projectId: ID!, $environmentId: ID!, $serviceId: ID!) {
   serviceDomainCreate(
@@ -5461,6 +5505,25 @@ export const UpdateServiceNameDocument = gql`
   updateService(projectId: $projectId, serviceId: $serviceId, name: $name) {
     id
   }
+}
+    `;
+export const VariablesSetFromObjectDocument = gql`
+    mutation VariablesSetFromObject($projectId: String!, $environmentId: String!, $serviceId: String, $variables: Json!) {
+  variablesSetFromObject(
+    projectId: $projectId
+    environmentId: $environmentId
+    serviceId: $serviceId
+    variables: $variables
+  )
+}
+    `;
+export const DecryptedVariablesForServiceDocument = gql`
+    query DecryptedVariablesForService($projectId: String!, $environmentId: String!, $serviceId: String) {
+  decryptedVariablesForService(
+    projectId: $projectId
+    environmentId: $environmentId
+    serviceId: $serviceId
+  )
 }
     `;
 export const MetricsForServiceDocument = gql`
@@ -5589,6 +5652,21 @@ export function getSdk(
         "mutation",
       );
     },
+    DeleteService(
+      variables: DeleteServiceMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<DeleteServiceMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<DeleteServiceMutation>(
+            DeleteServiceDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "DeleteService",
+        "mutation",
+      );
+    },
     ServiceDomainCreate(
       variables: ServiceDomainCreateMutationVariables,
       requestHeaders?: Dom.RequestInit["headers"],
@@ -5662,6 +5740,36 @@ export function getSdk(
           ),
         "UpdateServiceName",
         "mutation",
+      );
+    },
+    VariablesSetFromObject(
+      variables: VariablesSetFromObjectMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<VariablesSetFromObjectMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<VariablesSetFromObjectMutation>(
+            VariablesSetFromObjectDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "VariablesSetFromObject",
+        "mutation",
+      );
+    },
+    DecryptedVariablesForService(
+      variables: DecryptedVariablesForServiceQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"],
+    ): Promise<DecryptedVariablesForServiceQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<DecryptedVariablesForServiceQuery>(
+            DecryptedVariablesForServiceDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        "DecryptedVariablesForService",
+        "query",
       );
     },
     MetricsForService(

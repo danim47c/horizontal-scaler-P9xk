@@ -1,0 +1,13 @@
+mutation VariablesSetFromObject(
+  $projectId: String!
+  $environmentId: String!
+  $serviceId: String
+  $variables: Json!
+) {
+  variablesSetFromObject(
+    projectId: $projectId
+    environmentId: $environmentId
+    serviceId: $serviceId
+    variables: $variables
+  )
+}
