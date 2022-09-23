@@ -115,7 +115,7 @@ export const mirrorService = async (
   } catch (err) {
     console.log(err);
   }
-  await sleep(2);
+  await sleep(1);
   await sdk.SetDomainForEnvironment({
     projectId: PROJECT_ID,
     environmentId: ENVIRONMENT_ID,
