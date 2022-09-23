@@ -22,7 +22,7 @@ export const getAllServices = async (): Promise<
 };
 
 export const getServices = async (
-  serviceNameContains: string
+  serviceNameContains: string,
 ): Promise<ServicesQuery["services"]["nodes"]> => {
   const nodes = (
     await sdk.Services({
@@ -42,7 +42,7 @@ export const getServices = async (
 
 export const updateServiceName = async (
   serviceId: string,
-  name: string
+  name: string,
 ): Promise<void> => {
   await sdk.UpdateServiceName({
     projectId: PROJECT_ID,
@@ -53,7 +53,7 @@ export const updateServiceName = async (
 
 export const getServiceIdByName = (
   name: string,
-  services: ServicesQuery["services"]["nodes"]
+  services: ServicesQuery["services"]["nodes"],
 ): string => {
   for (let service of services) {
     if (service.name === name) {
@@ -65,7 +65,7 @@ export const getServiceIdByName = (
 
 export const mirrorService = async (
   sourceServiceId: string,
-  services: ServicesQuery["services"]["nodes"]
+  services: ServicesQuery["services"]["nodes"],
 ) => {
   // TODO: Merge all Queries & Mutations into one
   const serviceId = (
@@ -106,6 +106,7 @@ export const mirrorService = async (
     serviceId: serviceId,
     variables: variables,
   });
+
   try {
     await sdk.ServiceDomainCreate({
       projectId: PROJECT_ID,
@@ -122,13 +123,13 @@ export const mirrorService = async (
     serviceId: serviceId,
     domain: `${DOMAIN_ID}-${SERVICE_NAME}${services.length + 1}.up.railway.app`,
   });
-
   add();
+
   return service.updateService;
 };
 
 export const deleteMirror = async (
-  services: ServicesQuery["services"]["nodes"]
+  services: ServicesQuery["services"]["nodes"],
 ) => {
   const service = services[services.length - 1];
   await sdk.DeleteService({

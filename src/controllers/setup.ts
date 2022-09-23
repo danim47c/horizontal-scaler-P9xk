@@ -22,7 +22,7 @@ export const initSetup = async () => {
     const serviceId = getServiceIdByName(SERVICE_NAME, services);
     const domains = await getServiceDomains(serviceId);
     const customDomains = domains.customDomains;
-    const serviceDomain = domains.serviceDomains[0].domain;
+    const serviceDomain = domains.serviceDomains[0]!.domain;
 
     // Setup custom domain
     for (let customDomain of customDomains) {
@@ -43,12 +43,14 @@ export const initSetup = async () => {
         serviceId: SERVICE_ID,
       });
     }
-    await sdk.SetDomainForEnvironment({
-      projectId: PROJECT_ID,
-      environmentId: ENVIRONMENT_ID,
-      serviceId: SERVICE_ID,
-      domain: serviceDomain,
-    });
+    if (serviceDomain) {
+      await sdk.SetDomainForEnvironment({
+        projectId: PROJECT_ID,
+        environmentId: ENVIRONMENT_ID,
+        serviceId: SERVICE_ID,
+        domain: serviceDomain,
+      });
+    }
     // Setup service name
     await updateServiceName(SERVICE_ID, `${SERVICE_NAME}-gtwy`);
     await updateServiceName(serviceId, `${SERVICE_NAME} #1`);
