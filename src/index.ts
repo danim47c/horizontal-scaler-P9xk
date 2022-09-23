@@ -26,7 +26,7 @@ async function main() {
     return 0;
   });
   const serviceId = getServiceIdByName(`${SERVICE_NAME} #1`, services);
-  for (let i = 1; i < SERVICE_MIN; i++) {
+  for (let i = services.length; i < SERVICE_MIN; i++) {
     const service = await mirrorService(serviceId, services);
     services.push(service);
   }
