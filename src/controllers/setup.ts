@@ -22,7 +22,7 @@ export const initSetup = async () => {
     const serviceId = getServiceIdByName(SERVICE_NAME, services);
     const domains = await getServiceDomains(serviceId);
     const customDomains = domains.customDomains;
-    const serviceDomain = domains.serviceDomains[0]!.domain;
+    const serviceDomain = domains.serviceDomains[0]?.domain;
 
     // Setup custom domain
     for (let customDomain of customDomains) {
