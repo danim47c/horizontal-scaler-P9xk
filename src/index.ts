@@ -49,7 +49,6 @@ async function main() {
     ) {
       const service = await mirrorService(serviceId, services);
       services.push(service);
-      await sleep(1);
     } else if (
       cpu < CPU_MIN &&
       memory < MEMORY_MIN &&
@@ -57,7 +56,6 @@ async function main() {
     ) {
       await deleteMirror(services);
       services.pop();
-      await sleep(1);
     }
     await sleep(1);
   }
