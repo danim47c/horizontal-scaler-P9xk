@@ -31,4 +31,4 @@ Railway doesn't offer first-party support for horizontal scaling.Thus, I have bu
 8. `SERVICE_MAX` - Maximum number of instances that should be load-balanced at any given time, irrespective of the resource usage. 
 
 # NOTE
-This is an experimental service & horizontal-scaler use railway's internal API which can break in future. I won't be responsible for that.
+This is an experimental service & horizontal-scaler uses railway's internal API which can break in future. I won't be responsible for that.
