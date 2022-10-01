@@ -5,8 +5,8 @@ Railway doesn't offer first-party support for horizontal scaling.Thus, I have bu
 ## Step-By-Step Guide
 
 1. Open your project, press `Cmd/Ctrl + K` & type in `horizontal-scaler`
-    
-    ![Untitled 1](https://user-images.githubusercontent.com/101371689/192355396-36b4a9c4-6e39-4ebd-94a3-817327793cfb.png)
+
+    ![Untitled](https://user-images.githubusercontent.com/101371689/192355418-59d82d69-ce95-4b09-8ead-1f8d2d48f81b.png)
 
 
     
@@ -16,8 +16,8 @@ Railway doesn't offer first-party support for horizontal scaling.Thus, I have bu
 </p>
 
 3. That’s it! Now your service will be automatically scaled out based on it’s resource usage.
+![Untitled 1](https://user-images.githubusercontent.com/101371689/192355396-36b4a9c4-6e39-4ebd-94a3-817327793cfb.png)
 
-![Untitled](https://user-images.githubusercontent.com/101371689/192355418-59d82d69-ce95-4b09-8ead-1f8d2d48f81b.png)
 
 ## Configuration Options
 
