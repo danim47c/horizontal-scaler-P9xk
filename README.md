@@ -1,6 +1,6 @@
 # Horizontal Scaler for [Railway](https://railway.app)
 
-Railway doesn't offer first-party support for horizontal scaling.Thus, I have built a workaround for now that allows scaling out to any number of instances. And also supports auto-scaling, where your app scales up under periods of high load, before scaling back down once the traffic slows down. This is an experimental service & horizontal-scaler use railway's internal API which can break in future. I won't be responsible for that.
+Railway doesn't offer first-party support for horizontal scaling.Thus, I have built a workaround for now that allows scaling out to any number of instances. And also supports auto-scaling, where your app scales up under periods of high load, before scaling back down once the traffic slows down. **This is an experimental service & horizontal-scaler uses railway's internal API which can break in future. I won't be responsible for that.**
 
 ## Step-By-Step Guide
 
